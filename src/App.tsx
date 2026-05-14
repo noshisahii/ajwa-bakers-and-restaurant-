@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Routes, Route, Link } from 'react-router-dom';
+import BookTable from './pages/BookTable';
+import Checkout from './pages/Checkout';
 import { 
   ShoppingBag, 
   MapPin, 
@@ -38,7 +41,7 @@ interface CartItem {
   quantity: number;
 }
 
-export default function App() {
+export function Home() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -104,9 +107,9 @@ export default function App() {
                 </span>
               )}
             </button>
-            <button className={`px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg text-white ${scrolled ? 'bg-[#c18f58] hover:bg-white hover:text-[#2a2825] shadow-[#c18f58]/20' : 'bg-[#4a5d23] hover:bg-[#c18f58] shadow-black/20'}`}>
+            <Link to="/book-table" className={`px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg text-white ${scrolled ? 'bg-[#c18f58] hover:bg-white hover:text-[#2a2825] shadow-[#c18f58]/20' : 'bg-[#4a5d23] hover:bg-[#c18f58] shadow-black/20'}`}>
               Book a Table
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Nav */}
@@ -197,9 +200,9 @@ export default function App() {
                     <span className="text-xl font-serif text-[#4a5d23] font-bold">Total</span>
                     <span className="text-2xl font-mono font-bold text-[#4a5d23]">Rs. {cartTotal.toLocaleString()}</span>
                   </div>
-                  <button className="w-full bg-[#4a5d23] text-white py-4 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-[#c18f58] transition-all transform hover:-translate-y-1">
+                  <Link to="/checkout" className="block text-center w-full bg-[#4a5d23] text-white py-4 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-[#c18f58] transition-all transform hover:-translate-y-1">
                     Proceed to Checkout
-                  </button>
+                  </Link>
                 </div>
               )}
             </motion.div>
@@ -220,9 +223,9 @@ export default function App() {
               <a href="#dine-in" onClick={() => setIsMenuOpen(false)}>Dine-In Menu</a>
               <a href="#storefront" onClick={() => setIsMenuOpen(false)}>Order Online</a>
               <a href="#location" onClick={() => setIsMenuOpen(false)}>Locations</a>
-              <button className="bg-[#4a5d23] text-white py-4 rounded-full text-lg font-medium shadow-lg shadow-[#4a5d23]/20">
+              <Link to="/book-table" className="block w-full bg-[#4a5d23] text-white py-4 rounded-full text-lg font-medium shadow-lg shadow-[#4a5d23]/20">
                 Book a Table
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}
@@ -462,13 +465,17 @@ export default function App() {
             <p className="text-[#f9f7f2]/50 leading-relaxed text-lg italic font-serif">
               "Baking memories through generations with artisanal excellence and cultural heritage."
             </p>
-            <div className="flex space-x-4">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="bg-white/5 p-4 rounded-full hover:bg-[#c18f58] transition-all duration-300 transform hover:scale-110">
-                  <Icon size={20} />
+              <div className="flex space-x-4">
+                <a href="https://instagram.com/ajwabakersdaska" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-full hover:bg-[#c18f58] transition-all duration-300 transform hover:scale-110">
+                  <Instagram size={20} />
                 </a>
-              ))}
-            </div>
+                <a href="https://facebook.com/ajwabakers.daska" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-full hover:bg-[#c18f58] transition-all duration-300 transform hover:scale-110">
+                  <Facebook size={20} />
+                </a>
+                <a href="https://twitter.com/ajwadaska" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-full hover:bg-[#c18f58] transition-all duration-300 transform hover:scale-110">
+                  <Twitter size={20} />
+                </a>
+              </div>
           </div>
 
           <div>
@@ -516,6 +523,16 @@ export default function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/book-table" element={<BookTable />} />
+      <Route path="/checkout" element={<Checkout />} />
+    </Routes>
   );
 }
 
