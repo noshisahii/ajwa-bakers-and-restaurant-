@@ -51,11 +51,11 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center text-[#4a5d23]">
+      <nav className={`fixed w-full z-50 transition-colors duration-300 ${scrolled ? 'bg-[#2a2825] shadow-lg py-4' : 'bg-transparent py-6'}`}>
+        <div className={`max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center transition-colors duration-300 ${scrolled ? 'text-[#f9f7f2]' : 'text-white'}`}>
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl md:text-3xl font-serif font-bold tracking-widest">AJWA</h1>
-            <span className="text-xs uppercase tracking-[0.2em] font-medium hidden sm:inline-block border-l border-[#4a5d23]/20 pl-2">Boulangerie & Restaurant</span>
+            <span className={`text-xs uppercase tracking-[0.2em] font-medium hidden sm:inline-block border-l pl-2 ${scrolled ? 'border-[#f9f7f2]/20 text-[#c18f58]' : 'border-white/20 text-white/80'}`}>Bakery & Restaurant</span>
           </div>
 
           {/* Desktop Nav */}
@@ -63,7 +63,7 @@ export default function App() {
             <a href="#menu" className="text-xs font-semibold uppercase tracking-widest hover:text-[#c18f58] transition-colors">Menu</a>
             <a href="#about" className="text-xs font-semibold uppercase tracking-widest hover:text-[#c18f58] transition-colors">Our Story</a>
             <a href="#location" className="text-xs font-semibold uppercase tracking-widest hover:text-[#c18f58] transition-colors">Locations</a>
-            <button className="bg-[#4a5d23] text-white px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#2a2825] transition-all shadow-lg shadow-[#4a5d23]/20">
+            <button className={`px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg text-white ${scrolled ? 'bg-[#c18f58] hover:bg-white hover:text-[#2a2825] shadow-[#c18f58]/20' : 'bg-[#4a5d23] hover:bg-[#c18f58] shadow-black/20'}`}>
               Order Now
             </button>
           </div>
@@ -107,7 +107,7 @@ export default function App() {
           >
             <div className="absolute inset-0 bg-black/40 z-10" />
             <img 
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80" 
+              src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=1920&q=80" 
               className="w-full h-full object-cover"
               alt="Restaurant Interior"
               referrerPolicy="no-referrer"
