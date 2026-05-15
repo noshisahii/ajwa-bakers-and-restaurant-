@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, CreditCard, Wallet, MapPin, Phone, User, Landmark } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Checkout() {
+  const { cart, cartTotal, setIsCartOpen } = useCart();
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState('jazzcash');
+  const deliveryFee = 150;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsCartOpen(false);
+    if (cart.length === 0 && step === 1) {
+      navigate('/');
+    }
+  }, [cart, step, navigate, setIsCartOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,37 +158,35 @@ export default function Checkout() {
               <div className="bg-white p-6 md:p-8 rounded-[32px] shadow-xl shadow-[#e31837]/5 border border-[#e31837]/5 sticky top-32">
                 <h2 className="text-xl font-serif text-[#e31837] font-bold mb-6">Order Summary</h2>
                 <div className="space-y-4 mb-6 border-b border-[#e31837]/10 pb-6">
-                  {/* Mock items for visual purposes */}
-                  <div className="flex items-center gap-4">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80" alt="Ribs" className="w-16 h-16 rounded-xl object-cover shadow-sm bg-gray-100" />
-                    <div className="flex-1">
-                      <h4 className="text-sm font-bold text-[#2a2825]">Smoked BBQ Ribs</h4>
-                      <p className="text-xs text-[#2a2825]/60">Qty: 1</p>
+                  {cart.map(item => (
+                    <div key={item.cartId} className="flex items-center gap-4">
+                      <img src={item.item.image} alt={item.item.name} className="w-16 h-16 rounded-xl object-cover shadow-sm bg-gray-100" />
+                      <div className="flex-1">
+                        <h4 className="text-sm font-bold text-[#2a2825] leading-tight">{item.item.name}</h4>
+                        <div className="flex justify-between items-center mt-1">
+                           <span className="text-xs font-semibold text-[#009a44]">
+                            {item.size ? item.size.toUpperCase() : ''}
+                           </span>
+                           <span className="text-xs text-[#2a2825]/60 font-medium">Qty: {item.quantity}</span>
+                        </div>
+                      </div>
+                      <span className="font-mono font-bold text-[#2a2825] text-sm">Rs. {(item.price * item.quantity).toLocaleString()}</span>
                     </div>
-                    <span className="font-mono font-bold text-[#2a2825] text-sm">Rs. 2,500</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=200&q=80" alt="Cake" className="w-16 h-16 rounded-xl object-cover shadow-sm bg-gray-100" />
-                    <div className="flex-1">
-                      <h4 className="text-sm font-bold text-[#2a2825]">Chocolate Fudge Cake</h4>
-                      <p className="text-xs text-[#2a2825]/60">Qty: 1</p>
-                    </div>
-                    <span className="font-mono font-bold text-[#2a2825] text-sm">Rs. 1,000</span>
-                  </div>
+                  ))}
                 </div>
                 <div className="space-y-4 mb-6 border-b border-[#e31837]/10 pb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-[#2a2825]/70">Subtotal</span>
-                    <span className="font-mono font-bold text-[#2a2825]">Rs. 3,500</span>
+                    <span className="font-mono font-bold text-[#2a2825]">Rs. {cartTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-[#2a2825]/70">Delivery Fee</span>
-                    <span className="font-mono font-bold text-[#2a2825]">Rs. 150</span>
+                    <span className="font-mono font-bold text-[#2a2825]">Rs. {deliveryFee}</span>
                   </div>
                 </div>
                 <div className="flex justify-between mb-8">
                   <span className="text-lg font-serif text-[#e31837] font-bold">Total</span>
-                  <span className="text-xl font-mono font-bold text-[#009a44]">Rs. 3,650</span>
+                  <span className="text-xl font-mono font-bold text-[#009a44]">Rs. {(cartTotal + deliveryFee).toLocaleString()}</span>
                 </div>
                 <button type="submit" form="checkout-form" className="w-full bg-[#e31837] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#009a44] transition-all shadow-lg hover:-translate-y-1">
                   Pay Securely

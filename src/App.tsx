@@ -31,6 +31,7 @@ import {
   Search
 } from 'lucide-react';
 import { menuData, MenuItem } from './data/menu';
+import { CartProvider, useCart } from './context/CartContext';
 
 const categories = [
   { id: 'all', label: 'All Menu', icon: Coffee },
@@ -41,21 +42,12 @@ const categories = [
   { id: 'sweets', label: 'Traditional Sweets', icon: Star },
 ];
 
-interface CartItem {
-  cartId: string;
-  item: MenuItem;
-  size: string | null;
-  price: number;
-  quantity: number;
-}
-
 export function Home() {
+  const { cart, addToCart, updateQuantity, isCartOpen, setIsCartOpen, cartTotal, cartCount } = useCart();
   const [activeCategory, setActiveCategory] = useState('all');
   const [isLoadingMenu, setIsLoadingMenu] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -93,28 +85,7 @@ export function Home() {
       ? menuData.filter(item => item.popular)
       : menuData.filter(item => item.category === activeCategory);
 
-  const addToCart = (item: MenuItem, size: string | null, price: number) => {
-    setCart(prev => {
-      const existing = prev.find(i => i.item.id === item.id && i.size === size);
-      if (existing) {
-        return prev.map(i => i.cartId === existing.cartId ? { ...i, quantity: i.quantity + 1 } : i);
-      }
-      return [...prev, { cartId: `${item.id}-${size || 'default'}`, item, size, price, quantity: 1 }];
-    });
-    setIsCartOpen(true);
-  };
 
-  const updateQuantity = (cartId: string, delta: number) => {
-    setCart(prev => prev.map(i => {
-      if (i.cartId === cartId) {
-        return { ...i, quantity: Math.max(0, i.quantity + delta) };
-      }
-      return i;
-    }).filter(i => i.quantity > 0));
-  };
-
-  const cartTotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-  const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-[#f9f7f2]">
@@ -634,13 +605,15 @@ export function Home() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/book-table" element={<BookTable />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
-    </Routes>
+    <CartProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/book-table" element={<BookTable />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+      </Routes>
+    </CartProvider>
   );
 }
 
