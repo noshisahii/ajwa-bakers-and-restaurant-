@@ -27,7 +27,8 @@ import {
   Coffee,
   Minus,
   Trash2,
-  Flame
+  Flame,
+  Search
 } from 'lucide-react';
 import { menuData, MenuItem } from './data/menu';
 
@@ -50,10 +51,35 @@ interface CartItem {
 
 export function Home() {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [isLoadingMenu, setIsLoadingMenu] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const searchResults = searchQuery
+    ? menuData.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
+  const handleCategoryChange = (catId: string) => {
+    setActiveCategory(catId);
+    setIsLoadingMenu(true);
+    setTimeout(() => {
+      setIsLoadingMenu(false);
+    }, 600);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoadingMenu(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -101,8 +127,69 @@ export function Home() {
             </Link>
           </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="flex items-center space-x-2 md:space-x-8">
+            {/* Search Component */}
+            <div className="relative flex items-center">
+              <div className={`flex items-center transition-all duration-300 ${isSearchOpen ? 'w-48 sm:w-64 bg-white/10 rounded-full border border-white/20' : 'w-10'}`}>
+                <button
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className={`p-2 transition-colors ${scrolled ? 'text-[#f9f7f2] hover:text-[#009a44]' : 'text-white hover:text-[#009a44]'}`}
+                >
+                  <Search size={20} />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Search menu..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={`bg-transparent outline-none text-sm transition-all duration-300 ${isSearchOpen ? 'w-full opacity-100 pr-4' : 'w-0 opacity-0'} ${scrolled ? 'text-[#f9f7f2] placeholder-[#f9f7f2]/50' : 'text-white placeholder-white/50'}`}
+                />
+              </div>
+
+              {/* Search Results Dropdown */}
+              <AnimatePresence>
+                {isSearchOpen && searchQuery && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-14 right-0 w-[calc(100vw-2rem)] sm:w-80 bg-white rounded-2xl shadow-2xl border border-black/5 overflow-hidden flex flex-col max-h-[60vh] z-[80]"
+                  >
+                    <div className="overflow-y-auto p-2 hide-scrollbar">
+                      {searchResults.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-[#2a2825]/50">No items found.</div>
+                      ) : (
+                        searchResults.map(item => (
+                          <div 
+                            key={item.id} 
+                            className="flex items-center gap-3 p-3 hover:bg-black/5 rounded-xl transition-colors cursor-pointer"
+                            onClick={() => {
+                              setIsSearchOpen(false);
+                              setSearchQuery('');
+                              handleCategoryChange('all');
+                              const el = document.getElementById('storefront');
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                          >
+                            <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover" />
+                            <div className="flex-1">
+                              <h4 className="text-sm font-bold text-[#2a2825]">{item.name}</h4>
+                              <p className="text-xs text-[#2a2825]/60 line-clamp-1">{item.description}</p>
+                            </div>
+                            <span className="text-sm font-bold text-[#e31837]">
+                              Rs.{item.price}
+                            </span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-8">
             <a href="#dine-in" className="text-xs font-semibold uppercase tracking-widest hover:text-[#009a44] transition-colors">Dine-In</a>
             <a href="#storefront" className="text-xs font-semibold uppercase tracking-widest hover:text-[#009a44] transition-colors">Order Online</a>
             <a href="#location" className="text-xs font-semibold uppercase tracking-widest hover:text-[#009a44] transition-colors">Location</a>
@@ -138,6 +225,7 @@ export function Home() {
             <button className="p-3 hover:text-[#009a44] transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
             </button>
+          </div>
           </div>
         </div>
       </nav>
@@ -373,7 +461,7 @@ export function Home() {
               {categories.map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => handleCategoryChange(cat.id)}
                   className={`flex items-center space-x-3 px-8 py-3.5 rounded-full transition-all text-sm font-bold uppercase tracking-[0.1em] border ${
                     activeCategory === cat.id 
                     ? 'bg-[#e31837] border-[#e31837] text-white shadow-xl shadow-[#e31837]/20' 
@@ -392,9 +480,15 @@ export function Home() {
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
             >
               <AnimatePresence mode="popLayout">
-                {filteredMenu.map((item, index) => (
-                  <MenuItemCard key={item.id} item={item} index={index} onAddToCart={addToCart} />
-                ))}
+                {isLoadingMenu ? (
+                  [...Array(6)].map((_, index) => (
+                    <MenuItemSkeleton key={`skeleton-${index}`} index={index} />
+                  ))
+                ) : (
+                  filteredMenu.map((item, index) => (
+                    <MenuItemCard key={item.id} item={item} index={index} onAddToCart={addToCart} />
+                  ))
+                )}
               </AnimatePresence>
             </motion.div>
           </div>
@@ -656,5 +750,45 @@ function MenuItemCard({ item, onAddToCart, index }: { item: MenuItem; onAddToCar
     </motion.div>
     <ItemReviewsModal item={item} isOpen={isReviewOpen} onClose={() => setIsReviewOpen(false)} />
     </>
+  );
+}
+
+function MenuItemSkeleton({ index }: { index: number }) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.9, y: 30 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      transition={{ 
+        duration: 0.4, 
+        delay: index * 0.05,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
+      className="bg-white rounded-[32px] overflow-hidden shadow-xl shadow-[#e31837]/5 border border-[#e31837]/5 flex flex-col"
+    >
+      <div className="relative aspect-4-3 p-3">
+        <div className="w-full h-full rounded-[24px] bg-black/5 animate-pulse" />
+      </div>
+      <div className="px-8 pb-8 pt-4 flex-grow flex flex-col">
+        <div className="flex justify-between items-start mb-3 gap-4">
+            <div className="h-6 bg-black/5 rounded animate-pulse w-1/2" />
+        </div>
+        <div className="h-4 bg-black/5 rounded animate-pulse w-full mb-2" />
+        <div className="h-4 bg-black/5 rounded animate-pulse w-2/3 mb-4" />
+        <div className="flex space-x-1 mb-4 h-4">
+          <div className="w-24 h-4 bg-black/5 rounded animate-pulse" />
+        </div>
+        <div className="mt-auto space-y-6">
+          <div className="flex space-x-2">
+            <div className="h-11 bg-black/5 rounded-xl animate-pulse flex-1" />
+            <div className="h-11 bg-black/5 rounded-xl animate-pulse flex-1" />
+          </div>
+          <div className="flex items-center justify-between pt-2">
+            <div className="h-6 bg-black/5 rounded animate-pulse w-16" />
+            <div className="h-8 bg-black/5 rounded-full animate-pulse w-20" />
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 }

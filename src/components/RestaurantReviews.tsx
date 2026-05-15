@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, MessageCircle, X } from 'lucide-react';
 
@@ -36,8 +36,16 @@ const initialReviews: Review[] = [
 
 export default function RestaurantReviews() {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
+  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newReview, setNewReview] = useState({ name: '', rating: 5, comment: '' });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,27 +83,52 @@ export default function RestaurantReviews() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.slice(0, 3).map((review, idx) => (
-            <motion.div 
-              key={review.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#009a44]/50 transition-colors"
-            >
-              <div className="flex space-x-1 text-[#009a44] mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-gray-500" : ""} />
-                ))}
-              </div>
-              <p className="text-[#f9f7f2]/80 font-light italic mb-6 leading-relaxed">"{review.comment}"</p>
-              <div className="flex justify-between items-center text-sm font-medium">
-                <span className="uppercase tracking-widest text-white">{review.name}</span>
-                <span className="text-[#f9f7f2]/40 font-mono">{review.date}</span>
-              </div>
-            </motion.div>
-          ))}
+          {isLoading ? (
+            [...Array(3)].map((_, idx) => (
+              <motion.div 
+                key={`skeleton-${idx}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-white/5 p-8 rounded-3xl border border-white/10"
+              >
+                <div className="flex space-x-1 mb-4 h-4">
+                  <div className="w-24 h-4 bg-white/10 rounded animate-pulse" />
+                </div>
+                <div className="space-y-3 mb-6">
+                  <div className="h-4 bg-white/10 rounded animate-pulse w-full" />
+                  <div className="h-4 bg-white/10 rounded animate-pulse w-5/6" />
+                  <div className="h-4 bg-white/10 rounded animate-pulse w-4/6" />
+                </div>
+                <div className="flex justify-between items-center text-sm font-medium">
+                  <div className="w-20 h-4 bg-white/10 rounded animate-pulse" />
+                  <div className="w-16 h-4 bg-white/10 rounded animate-pulse" />
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            reviews.slice(0, 3).map((review, idx) => (
+              <motion.div 
+                key={review.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#009a44]/50 transition-colors"
+              >
+                <div className="flex space-x-1 text-[#009a44] mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-gray-500" : ""} />
+                  ))}
+                </div>
+                <p className="text-[#f9f7f2]/80 font-light italic mb-6 leading-relaxed">"{review.comment}"</p>
+                <div className="flex justify-between items-center text-sm font-medium">
+                  <span className="uppercase tracking-widest text-white">{review.name}</span>
+                  <span className="text-[#f9f7f2]/40 font-mono">{review.date}</span>
+                </div>
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
 
