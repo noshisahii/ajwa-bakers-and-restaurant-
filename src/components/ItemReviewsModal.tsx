@@ -63,7 +63,7 @@ export default function ItemReviewsModal({ item, isOpen, onClose }: { item: Menu
           >
             <div className="flex justify-between items-center p-6 border-b border-[#e31837]/10 bg-white">
               <h2 className="text-2xl font-serif font-bold text-[#e31837]">Reviews: {item.name}</h2>
-              <button onClick={onClose} className="p-2 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
+              <button onClick={onClose} className="p-3 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
                 <X size={24} />
               </button>
             </div>

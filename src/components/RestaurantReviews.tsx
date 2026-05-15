@@ -113,11 +113,11 @@ export default function RestaurantReviews() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-[#f9f7f2] rounded-[32px] p-8 z-[70] shadow-2xl text-[#2a2825]"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-full max-w-lg bg-[#f9f7f2] rounded-[32px] p-6 md:p-8 z-[70] shadow-2xl text-[#2a2825]"
             >
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-serif font-bold text-[#e31837]">Share Your Experience</h2>
-                <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#e31837]">Share Your Experience</h2>
+                <button onClick={() => setIsModalOpen(false)} className="p-3 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
                   <X size={24} />
                 </button>
               </div>

@@ -117,20 +117,20 @@ export function Home() {
           </div>
 
           {/* Mobile Nav */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="md:hidden flex items-center space-x-2">
             <button 
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2 hover:text-[#009a44] transition-colors"
+              className="relative p-3 hover:text-[#009a44] transition-colors"
             >
-              <ShoppingBag size={20} />
+              <ShoppingBag size={24} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#009a44] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute top-1 right-1 bg-[#009a44] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
             </button>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
+            <button className="p-3 hover:text-[#009a44] transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
             </button>
           </div>
         </div>
@@ -156,7 +156,7 @@ export function Home() {
             >
               <div className="p-6 border-b border-[#e31837]/10 flex justify-between items-center bg-white">
                 <h2 className="font-serif text-2xl font-bold text-[#e31837]">Your Order</h2>
-                <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
+                <button onClick={() => setIsCartOpen(false)} className="p-3 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
                   <X size={24} />
                 </button>
               </div>
@@ -178,13 +178,13 @@ export function Home() {
                         </div>
                         <div className="flex justify-between items-center mt-4">
                           <span className="font-mono font-bold text-[#e31837]">Rs. {item.price.toLocaleString()}</span>
-                          <div className="flex items-center space-x-3 bg-[#f9f7f2] rounded-full px-2 py-1">
-                            <button onClick={() => updateQuantity(item.cartId, -1)} className="p-1 hover:text-[#009a44]">
-                              <Minus size={14} />
+                          <div className="flex items-center space-x-1 bg-[#f9f7f2] rounded-full p-1">
+                            <button onClick={() => updateQuantity(item.cartId, -1)} className="w-11 h-11 flex justify-center items-center rounded-full hover:bg-black/5 hover:text-[#009a44]">
+                              <Minus size={16} />
                             </button>
-                            <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.cartId, 1)} className="p-1 hover:text-[#009a44]">
-                              <Plus size={14} />
+                            <span className="text-sm font-bold w-6 text-center">{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.cartId, 1)} className="w-11 h-11 flex justify-center items-center rounded-full hover:bg-black/5 hover:text-[#009a44]">
+                              <Plus size={16} />
                             </button>
                           </div>
                         </div>
@@ -596,7 +596,7 @@ function MenuItemCard({ item, onAddToCart, index }: { item: MenuItem; onAddToCar
 
         <button 
           onClick={() => setIsReviewOpen(true)}
-          className="flex items-center space-x-1 text-[#009a44] hover:text-[#e31837] transition-colors mb-6 text-sm font-medium"
+          className="flex items-center space-x-1 text-[#009a44] hover:text-[#e31837] transition-colors mb-4 text-sm font-medium py-2"
         >
           <div className="flex space-x-0.5">
             {[...Array(5)].map((_, i) => (
@@ -614,7 +614,7 @@ function MenuItemCard({ item, onAddToCart, index }: { item: MenuItem; onAddToCar
                 <button
                   key={opt.size}
                   onClick={() => handleSizeChange(opt.size, opt.price)}
-                  className={`px-4 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-[0.1em] transition-all border ${
+                  className={`px-4 py-3 min-h-[44px] rounded-xl text-[10px] font-bold uppercase tracking-[0.1em] transition-all border ${
                     selectedSize === opt.size 
                     ? 'bg-[#2a2825] border-[#2a2825] text-white shadow-lg' 
                     : 'bg-[#f9f7f2] border-transparent text-[#2a2825] hover:border-[#2a2825]/20 hover:bg-white'
