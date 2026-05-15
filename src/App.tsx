@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Routes, Route, Link } from 'react-router-dom';
 import BookTable from './pages/BookTable';
 import Checkout from './pages/Checkout';
+import RestaurantReviews from './components/RestaurantReviews';
+import ItemReviewsModal from './components/ItemReviewsModal';
 import { 
   ShoppingBag, 
   MapPin, 
@@ -390,6 +392,8 @@ export function Home() {
           </div>
         </section>
 
+        <RestaurantReviews />
+
         {/* Location Section */}
         <section id="location" className="py-24 px-4 md:px-8 bg-white border-t border-[#4a5d23]/5">
           <div className="max-w-7xl mx-auto">
@@ -539,6 +543,7 @@ export default function App() {
 function MenuItemCard({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: MenuItem, size: string | null, price: number) => void }) {
   const [selectedSize, setSelectedSize] = useState(item.options ? item.options[0].size : null);
   const [currentPrice, setCurrentPrice] = useState(item.price || (item.options ? item.options[0].price : 0));
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const handleSizeChange = (size: string, price: number) => {
     setSelectedSize(size);
@@ -546,13 +551,14 @@ function MenuItemCard({ item, onAddToCart }: { item: MenuItem; onAddToCart: (ite
   };
 
   return (
-    <motion.div 
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="bg-white rounded-[32px] overflow-hidden shadow-xl shadow-[#4a5d23]/5 border border-[#4a5d23]/5 hover:shadow-2xl hover:shadow-[#4a5d23]/10 transition-all group flex flex-col"
-    >
+    <>
+      <motion.div 
+        layout
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="bg-white rounded-[32px] overflow-hidden shadow-xl shadow-[#4a5d23]/5 border border-[#4a5d23]/5 hover:shadow-2xl hover:shadow-[#4a5d23]/10 transition-all group flex flex-col"
+      >
       <div className="relative aspect-4-3 overflow-hidden p-3">
         <div className="w-full h-full rounded-[24px] overflow-hidden relative">
           <img 
@@ -577,9 +583,21 @@ function MenuItemCard({ item, onAddToCart }: { item: MenuItem; onAddToCart: (ite
             </div>
           )}
         </div>
-        <p className="text-[#2a2825]/50 text-sm mb-8 line-clamp-2 leading-relaxed">
+        <p className="text-[#2a2825]/50 text-sm mb-4 line-clamp-2 leading-relaxed">
           {item.description}
         </p>
+
+        <button 
+          onClick={() => setIsReviewOpen(true)}
+          className="flex items-center space-x-1 text-[#c18f58] hover:text-[#4a5d23] transition-colors mb-6 text-sm font-medium"
+        >
+          <div className="flex space-x-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={14} className={i < 4 ? "fill-current" : ""} />
+            ))}
+          </div>
+          <span className="ml-2 text-xs uppercase tracking-widest text-[#2a2825]/50 hover:text-[#4a5d23]">(See Reviews)</span>
+        </button>
 
         {item.options ? (
           <div className="mb-8 space-y-4">
@@ -621,5 +639,7 @@ function MenuItemCard({ item, onAddToCart }: { item: MenuItem; onAddToCart: (ite
         </div>
       </div>
     </motion.div>
+    <ItemReviewsModal item={item} isOpen={isReviewOpen} onClose={() => setIsReviewOpen(false)} />
+    </>
   );
 }
