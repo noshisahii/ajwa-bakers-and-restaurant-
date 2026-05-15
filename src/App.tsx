@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Routes, Route, Link } from 'react-router-dom';
 import BookTable from './pages/BookTable';
 import Checkout from './pages/Checkout';
+import { Privacy } from './pages/Privacy';
+import { Terms } from './pages/Terms';
 import RestaurantReviews from './components/RestaurantReviews';
 import ItemReviewsModal from './components/ItemReviewsModal';
 import Logo from './components/Logo';
@@ -24,12 +26,14 @@ import {
   Cookie,
   Coffee,
   Minus,
-  Trash2
+  Trash2,
+  Flame
 } from 'lucide-react';
 import { menuData, MenuItem } from './data/menu';
 
 const categories = [
   { id: 'all', label: 'All Menu', icon: Coffee },
+  { id: 'popular', label: 'Popular Items', icon: Flame },
   { id: 'restaurant', label: 'Restaurant', icon: Utensils },
   { id: 'bakery', label: 'Bakery', icon: Cookie },
   { id: 'cakes', label: 'Cakes', icon: Cake },
@@ -59,7 +63,9 @@ export function Home() {
 
   const filteredMenu = activeCategory === 'all' 
     ? menuData 
-    : menuData.filter(item => item.category === activeCategory);
+    : activeCategory === 'popular'
+      ? menuData.filter(item => item.popular)
+      : menuData.filter(item => item.category === activeCategory);
 
   const addToCart = (item: MenuItem, size: string | null, price: number) => {
     setCart(prev => {
@@ -325,9 +331,9 @@ export function Home() {
               </div>
               
               <div className="pt-6">
-                <button className="bg-transparent border border-[#009a44] text-[#009a44] px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-[#009a44] hover:text-white transition-all">
+                <Link to="/book-table" className="inline-block bg-transparent border border-[#009a44] text-[#009a44] px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-[#009a44] hover:text-white transition-all text-center">
                   Reserve Your Table
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -505,7 +511,7 @@ export function Home() {
           </div>
 
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#009a44]">Stay Connected</h4>
+            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#009a44]">Connect</h4>
             <p className="text-[#f9f7f2]/50 mb-8 text-sm">Get updates on new menu items and special offers.</p>
             <div className="flex bg-white/5 p-1.5 rounded-full border border-white/10 focus-within:border-[#009a44] transition-all">
               <input 
@@ -523,8 +529,8 @@ export function Home() {
         <div className="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[#f9f7f2]/30 text-xs uppercase tracking-widest font-medium">Baking in Daska — © 2024 Ajwa Bakers</p>
           <div className="flex space-x-10 text-[#f9f7f2]/30 text-[10px] font-bold uppercase tracking-[0.2em]">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </footer>
@@ -538,6 +544,8 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/book-table" element={<BookTable />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
     </Routes>
   );
 }
