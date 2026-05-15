@@ -22,13 +22,26 @@ export default function BookTable() {
 
   return (
     <div className="min-h-screen bg-[#f9f7f2] pt-32 pb-24 px-4 md:px-8 font-sans">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <Link to="/" className="inline-flex items-center space-x-2 text-[#009a44] hover:text-[#e31837] mb-8 font-bold text-sm tracking-widest uppercase transition-colors">
           <ChevronLeft size={16} />
           <span>Back to Home</span>
         </Link>
         
-        <div className="bg-white p-6 md:p-12 rounded-[40px] shadow-2xl shadow-[#e31837]/5 border border-[#e31837]/5">
+        <div className="bg-white rounded-[40px] shadow-2xl shadow-[#e31837]/5 border border-[#e31837]/5 overflow-hidden flex flex-col lg:flex-row">
+          <div className="lg:w-2/5 hidden lg:block relative">
+            <img 
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" 
+              alt="Restaurant interior" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute bottom-10 left-10 right-10 text-white">
+              <h3 className="font-serif text-3xl mb-2 leading-tight">Create Memories</h3>
+              <p className="text-white/80 font-light">Join us for an unforgettable dining experience in our beautifully designed space.</p>
+            </div>
+          </div>
+          <div className="lg:w-3/5 p-6 md:p-12">
           {step === 1 ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="text-center mb-10">
@@ -148,6 +161,7 @@ export default function BookTable() {
               </Link>
             </motion.div>
           )}
+          </div>
         </div>
       </div>
     </div>

@@ -14,12 +14,24 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-[#f9f7f2] pt-32 pb-24 px-4 md:px-8 font-sans">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <Link to="/" className="inline-flex items-center space-x-2 text-[#009a44] hover:text-[#e31837] mb-8 font-bold text-sm tracking-widest uppercase transition-colors">
           <ChevronLeft size={16} />
           <span>Back to Home</span>
         </Link>
         
+        <div className="relative w-full h-48 md:h-64 rounded-[40px] overflow-hidden mb-10 shadow-2xl">
+          <img 
+            src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=1200&q=80" 
+            alt="Delicious food delivery" 
+            className="absolute inset-0 w-full h-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-12">
+            <span className="text-[#009a44] font-serif italic text-xl md:text-2xl mb-2 block text-shadow-sm">Almost there</span>
+            <h1 className="text-4xl md:text-5xl font-serif text-white font-bold tracking-wide text-shadow-sm">Secure Checkout</h1>
+          </div>
+        </div>
+
         {step === 1 ? (
           <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
@@ -135,7 +147,25 @@ export default function Checkout() {
               <div className="bg-white p-6 md:p-8 rounded-[32px] shadow-xl shadow-[#e31837]/5 border border-[#e31837]/5 sticky top-32">
                 <h2 className="text-xl font-serif text-[#e31837] font-bold mb-6">Order Summary</h2>
                 <div className="space-y-4 mb-6 border-b border-[#e31837]/10 pb-6">
-                  {/* Since cart state is in App, we are rendering static or passed mock data in this isolated page. For full integration we'd read from context. Let's just assume we read from localstorage or keep it simple */}
+                  {/* Mock items for visual purposes */}
+                  <div className="flex items-center gap-4">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80" alt="Ribs" className="w-16 h-16 rounded-xl object-cover shadow-sm bg-gray-100" />
+                    <div className="flex-1">
+                      <h4 className="text-sm font-bold text-[#2a2825]">Smoked BBQ Ribs</h4>
+                      <p className="text-xs text-[#2a2825]/60">Qty: 1</p>
+                    </div>
+                    <span className="font-mono font-bold text-[#2a2825] text-sm">Rs. 2,500</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=200&q=80" alt="Cake" className="w-16 h-16 rounded-xl object-cover shadow-sm bg-gray-100" />
+                    <div className="flex-1">
+                      <h4 className="text-sm font-bold text-[#2a2825]">Chocolate Fudge Cake</h4>
+                      <p className="text-xs text-[#2a2825]/60">Qty: 1</p>
+                    </div>
+                    <span className="font-mono font-bold text-[#2a2825] text-sm">Rs. 1,000</span>
+                  </div>
+                </div>
+                <div className="space-y-4 mb-6 border-b border-[#e31837]/10 pb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-[#2a2825]/70">Subtotal</span>
                     <span className="font-mono font-bold text-[#2a2825]">Rs. 3,500</span>
