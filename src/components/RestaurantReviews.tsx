@@ -62,12 +62,12 @@ export default function RestaurantReviews() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div>
-            <span className="text-[#c18f58] font-serif italic text-2xl mb-4 block tracking-wide">Guestbook</span>
-            <h3 className="text-white font-serif text-5xl md:text-6xl">Customer Reviews</h3>
+            <span className="text-[#009a44] font-serif italic text-2xl mb-4 block tracking-wide">Guestbook</span>
+            <h3 className="text-white font-serif text-4xl md:text-5xl lg:text-6xl">Customer Reviews</h3>
           </div>
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="bg-transparent border border-[#c18f58] text-[#c18f58] px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-[#c18f58] hover:text-white transition-all flex items-center space-x-2"
+            className="bg-transparent border border-[#009a44] text-[#009a44] px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-[#009a44] hover:text-white transition-all flex items-center space-x-2"
           >
             <MessageCircle size={18} />
             <span>Leave a Review</span>
@@ -82,9 +82,9 @@ export default function RestaurantReviews() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#c18f58]/50 transition-colors"
+              className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#009a44]/50 transition-colors"
             >
-              <div className="flex space-x-1 text-[#c18f58] mb-4">
+              <div className="flex space-x-1 text-[#009a44] mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-gray-500" : ""} />
                 ))}
@@ -116,8 +116,8 @@ export default function RestaurantReviews() {
               className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-[#f9f7f2] rounded-[32px] p-8 z-[70] shadow-2xl text-[#2a2825]"
             >
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-serif font-bold text-[#4a5d23]">Share Your Experience</h2>
-                <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-[#4a5d23]/5 rounded-full text-[#4a5d23] transition-colors">
+                <h2 className="text-3xl font-serif font-bold text-[#e31837]">Share Your Experience</h2>
+                <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-[#e31837]/5 rounded-full text-[#e31837] transition-colors">
                   <X size={24} />
                 </button>
               </div>
@@ -129,7 +129,7 @@ export default function RestaurantReviews() {
                     type="text" 
                     required
                     maxLength={30}
-                    className="w-full px-5 py-4 bg-white rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all shadow-sm"
+                    className="w-full px-5 py-4 bg-white rounded-2xl outline-none focus:ring-2 focus:ring-[#009a44]/50 border border-transparent transition-all shadow-sm"
                     value={newReview.name}
                     onChange={e => setNewReview({...newReview, name: e.target.value})}
                   />
@@ -147,7 +147,7 @@ export default function RestaurantReviews() {
                       >
                         <Star 
                           size={32} 
-                          className={star <= newReview.rating ? "text-[#c18f58] fill-[#c18f58]" : "text-gray-300"} 
+                          className={star <= newReview.rating ? "text-[#009a44] fill-[#009a44]" : "text-gray-300"} 
                         />
                       </button>
                     ))}
@@ -160,14 +160,14 @@ export default function RestaurantReviews() {
                     required
                     rows={4}
                     maxLength={300}
-                    className="w-full px-5 py-4 bg-white rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all shadow-sm resize-none"
+                    className="w-full px-5 py-4 bg-white rounded-2xl outline-none focus:ring-2 focus:ring-[#009a44]/50 border border-transparent transition-all shadow-sm resize-none"
                     value={newReview.comment}
                     onChange={e => setNewReview({...newReview, comment: e.target.value})}
                   />
                 </div>
 
                 <div className="pt-4">
-                  <button type="submit" className="w-full bg-[#4a5d23] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#c18f58] transition-all shadow-lg shadow-[#4a5d23]/20">
+                  <button type="submit" className="w-full bg-[#e31837] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#009a44] transition-all shadow-lg shadow-[#e31837]/20">
                     Submit Review
                   </button>
                 </div>
