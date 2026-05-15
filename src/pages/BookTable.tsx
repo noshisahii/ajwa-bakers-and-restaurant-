@@ -32,7 +32,7 @@ export default function BookTable() {
           {step === 1 ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="text-center mb-10">
-                <span className="text-[#c18f58] font-serif italic text-2xl mb-2 block">Dine With Us</span>
+                <span className="text-[#c18f58] font-serif italic text-2xl mb-2 block">Reserve a Table</span>
                 <h1 className="text-4xl md:text-5xl font-serif text-[#4a5d23] font-bold">Book a Table</h1>
               </div>
 

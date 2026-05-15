@@ -161,7 +161,7 @@ export function Home() {
                 {cart.length === 0 ? (
                   <div className="h-full flex flex-col items-center justify-center text-[#2a2825]/40 space-y-4">
                     <ShoppingBag size={48} />
-                    <p className="font-serif text-xl">Your culinary basket is empty.</p>
+                    <p className="font-serif text-xl">Your cart is empty.</p>
                   </div>
                 ) : (
                   cart.map(item => (
@@ -264,7 +264,7 @@ export function Home() {
               transition={{ delay: 0.4 }}
               className="text-6xl md:text-9xl font-serif font-light mb-10 leading-[1.1] tracking-tight"
             >
-              A Heritage of <br/><span className="italic font-serif">Fine Taste</span>
+              Freshly Baked <br/><span className="italic font-serif">Every Day</span>
             </motion.h2>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -289,32 +289,32 @@ export function Home() {
           <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-10">
               <div>
-                <span className="text-[#c18f58] font-serif italic text-3xl mb-4 block">The Dine-In Experience</span>
-                <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] font-light">Culinary Art, <br/> Served Fresh.</h2>
+                <span className="text-[#c18f58] font-serif italic text-3xl mb-4 block">Dine With Us</span>
+                <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] font-light">Great Food, <br/> Good Times.</h2>
               </div>
               <p className="text-[#f9f7f2]/60 text-lg leading-relaxed max-w-lg font-light">
-                Our dining rooms offer a sanctuary for culinary exploration. From stone-fired pizzas to heirloom BBQ recipes passed down through generations, every plate is crafted with devotion.
+                Whether you're craving our famous BBQ or just want a quiet corner for coffee and cake, our dining area is perfect for family gatherings and catching up with friends.
               </p>
               
               <div className="space-y-8 pt-6 border-t border-white/10">
                 <div className="flex justify-between items-end border-b border-white/10 pb-4 group cursor-pointer hover:border-[#c18f58] transition-colors">
                   <div>
                     <h4 className="font-serif text-2xl text-white group-hover:text-[#c18f58] transition-colors">The Heritage BBQ Platter</h4>
-                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Slow-marinated malai boti, seekh kababs, fresh naan.</p>
+                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Tikka, seekh kababs, and fresh naan straight from the tandoor.</p>
                   </div>
                   <span className="font-mono text-[#c18f58]">Rs. 3,500</span>
                 </div>
                 <div className="flex justify-between items-end border-b border-white/10 pb-4 group cursor-pointer hover:border-[#c18f58] transition-colors">
                   <div>
                     <h4 className="font-serif text-2xl text-white group-hover:text-[#c18f58] transition-colors">Velvet Black Forest</h4>
-                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Signature dark chocolate sponge, Madagascar vanilla cream.</p>
+                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Freshly baked chocolate sponge with a creamy vanilla filling.</p>
                   </div>
                   <span className="font-mono text-[#c18f58]">Rs. 1,800</span>
                 </div>
                 <div className="flex justify-between items-end border-b border-white/10 pb-4 group cursor-pointer hover:border-[#c18f58] transition-colors">
                   <div>
-                    <h4 className="font-serif text-2xl text-white group-hover:text-[#c18f58] transition-colors">Saffron Gulab Jamun</h4>
-                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Warm milk-solid spheres, Iranian saffron, rose syrup.</p>
+                    <h4 className="font-serif text-2xl text-white group-hover:text-[#c18f58] transition-colors">Local Sweets</h4>
+                    <p className="text-sm text-[#f9f7f2]/50 mt-2 font-light">Warm gulab jamun, rasgulla, and fresh traditional sweets.</p>
                   </div>
                   <span className="font-mono text-[#c18f58]">Rs. 1,200</span>
                 </div>
@@ -336,7 +336,7 @@ export function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#2a2825] via-transparent to-transparent" />
               <div className="absolute bottom-10 left-10 right-10 bg-black/40 backdrop-blur-md p-8 rounded-3xl border border-white/10">
-                <p className="font-serif italic text-white text-xl">"A maestro of flavors right in the heart of Daska. The ambiance perfectly complements the exceptional food."</p>
+                <p className="font-serif italic text-white text-xl">"Best bakery in Daska! Their Black Forest cake is always a hit at our family birthdays."</p>
                 <p className="text-[#c18f58] text-sm uppercase tracking-widest mt-4 font-bold">— Local Guide</p>
               </div>
             </div>
@@ -347,8 +347,8 @@ export function Home() {
         <section id="storefront" className="py-32 px-4 md:px-8 bg-[#f9f7f2]">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <span className="text-[#c18f58] font-serif italic text-2xl mb-4 block tracking-wide">The Digital Storefront</span>
-              <h3 className="text-[#4a5d23] font-serif text-5xl md:text-7xl mb-8">Order & Enjoy at Home</h3>
+              <span className="text-[#c18f58] font-serif italic text-2xl mb-4 block tracking-wide">Order Online</span>
+              <h3 className="text-[#4a5d23] font-serif text-5xl md:text-7xl mb-8">Get It Delivered</h3>
               <div className="w-40 h-[1px] bg-[#4a5d23]/20 mx-auto rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ x: -160 }}
@@ -397,8 +397,8 @@ export function Home() {
               <div className="space-y-10">
                 <div>
                   <span className="text-[#c18f58] font-serif italic text-2xl mb-4 block">Visit Us</span>
-                  <h3 className="text-[#4a5d23] font-serif text-5xl md:text-6xl mb-4 leading-tight">In the Heart <br/> of Daska</h3>
-                  <p className="text-[#2a2825]/60 text-lg max-w-md">Our heirloom brick ovens and warm hospitality await you at our flagship location.</p>
+                  <h3 className="text-[#4a5d23] font-serif text-5xl md:text-6xl mb-4 leading-tight">Our Daska <br/> Branch</h3>
+                  <p className="text-[#2a2825]/60 text-lg max-w-md">Drop by our main branch for fresh bread, cakes, or a family dinner.</p>
                 </div>
                 
                 <div className="space-y-8">
@@ -407,7 +407,7 @@ export function Home() {
                       <MapPin size={28} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg uppercase tracking-widest text-[#4a5d23] mb-1">Estate</h4>
+                      <h4 className="font-bold text-lg uppercase tracking-widest text-[#4a5d23] mb-1">Address</h4>
                       <p className="text-[#2a2825]/70 leading-relaxed">Gujranwala Road, Daska, Sialkot, <br/> Punjab, Pakistan</p>
                     </div>
                   </div>
@@ -417,7 +417,7 @@ export function Home() {
                       <Phone size={28} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg uppercase tracking-widest text-[#4a5d23] mb-1">Concierge</h4>
+                      <h4 className="font-bold text-lg uppercase tracking-widest text-[#4a5d23] mb-1">Call Us</h4>
                       <p className="text-[#2a2825]/70">+92 52 6612345</p>
                     </div>
                   </div>
@@ -463,7 +463,7 @@ export function Home() {
           <div className="space-y-8">
             <h2 className="text-4xl font-serif font-bold tracking-widest text-[#c18f58]">AJWA</h2>
             <p className="text-[#f9f7f2]/50 leading-relaxed text-lg italic font-serif">
-              "Baking memories through generations with artisanal excellence and cultural heritage."
+              "Serving the Daska community with fresh bakery items and delicious meals for over 30 years."
             </p>
               <div className="flex space-x-4">
                 <a href="https://instagram.com/ajwabakersdaska" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-4 rounded-full hover:bg-[#c18f58] transition-all duration-300 transform hover:scale-110">
@@ -479,28 +479,28 @@ export function Home() {
           </div>
 
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">Boulangerie</h4>
+            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">Bakery Menu</h4>
             <ul className="space-y-5 text-[#f9f7f2]/60 font-medium">
-              <li><a href="#" className="hover:text-white transition-colors">Patisserie Selection</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Artisan Sourdough</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Traditional Mithai</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Gourmet Platters</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Fresh Cakes</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Fresh Bread</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Local Sweets</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Party Platters</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">Heritage</h4>
+            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">About Us</h4>
             <ul className="space-y-5 text-[#f9f7f2]/60 font-medium">
-              <li><a href="#" className="hover:text-white transition-colors">Our Heirloom Story</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Quality Standards</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Career Sanctuary</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Private Dining</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Our Story</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Our Ingredients</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Book a Hall</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">Journal</h4>
-            <p className="text-[#f9f7f2]/50 mb-8 text-sm">Join our newsletter for artisanal recipes.</p>
+            <h4 className="font-bold text-xs uppercase tracking-[0.3em] mb-8 text-[#c18f58]">Stay Connected</h4>
+            <p className="text-[#f9f7f2]/50 mb-8 text-sm">Get updates on new menu items and special offers.</p>
             <div className="flex bg-white/5 p-1.5 rounded-full border border-white/10 focus-within:border-[#c18f58] transition-all">
               <input 
                 type="email" 
@@ -515,10 +515,10 @@ export function Home() {
         </div>
         
         <div className="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[#f9f7f2]/30 text-xs uppercase tracking-widest font-medium">Handcrafted in Daska — © 2024 Ajwa Heritage Group</p>
+          <p className="text-[#f9f7f2]/30 text-xs uppercase tracking-widest font-medium">Baking in Daska — © 2024 Ajwa Bakers</p>
           <div className="flex space-x-10 text-[#f9f7f2]/30 text-[10px] font-bold uppercase tracking-[0.2em]">
-            <a href="#" className="hover:text-white transition-colors">Privacy Dossier</a>
-            <a href="#" className="hover:text-white transition-colors">Global Terms</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </footer>

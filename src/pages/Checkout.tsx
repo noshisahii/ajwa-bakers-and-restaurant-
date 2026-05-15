@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { ChevronLeft, CreditCard, Wallet, MapPin, Phone, User } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronLeft, CreditCard, Wallet, MapPin, Phone, User, Landmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Checkout() {
@@ -21,11 +21,11 @@ export default function Checkout() {
         </Link>
         
         {step === 1 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <form id="checkout-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
               <div className="bg-white p-8 rounded-[32px] shadow-xl shadow-[#4a5d23]/5 border border-[#4a5d23]/5">
                 <h2 className="text-2xl font-serif text-[#4a5d23] font-bold mb-6">Delivery Details</h2>
-                <form className="space-y-6">
+                <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Full Name</label>
@@ -49,56 +49,85 @@ export default function Checkout() {
                       <textarea rows={3} required className="w-full pl-12 pr-4 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all resize-none"></textarea>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
 
               <div className="bg-white p-8 rounded-[32px] shadow-xl shadow-[#4a5d23]/5 border border-[#4a5d23]/5">
                 <h2 className="text-2xl font-serif text-[#4a5d23] font-bold mb-6">Payment Method</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <button 
+                    type="button"
                     onClick={() => setPaymentMethod('jazzcash')}
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${paymentMethod === 'jazzcash' ? 'border-[#c18f58] bg-[#c18f58]/5' : 'border-gray-100 bg-white hover:border-[#c18f58]/50'}`}
                   >
-                    <span className="font-bold text-[#2a2825] mt-2">JazzCash</span>
+                    <span className={`font-bold mt-2 ${paymentMethod === 'jazzcash' ? 'text-[#c18f58]' : 'text-[#2a2825]'}`}>JazzCash</span>
                   </button>
                   <button 
+                    type="button"
                     onClick={() => setPaymentMethod('easypaisa')}
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${paymentMethod === 'easypaisa' ? 'border-[#c18f58] bg-[#c18f58]/5' : 'border-gray-100 bg-white hover:border-[#c18f58]/50'}`}
                   >
-                    <span className="font-bold text-[#2a2825] mt-2">Easypaisa</span>
+                    <span className={`font-bold mt-2 ${paymentMethod === 'easypaisa' ? 'text-[#c18f58]' : 'text-[#2a2825]'}`}>Easypaisa</span>
                   </button>
                   <button 
+                    type="button"
+                    onClick={() => setPaymentMethod('bank')}
+                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${paymentMethod === 'bank' ? 'border-[#c18f58] bg-[#c18f58]/5' : 'border-gray-100 bg-white hover:border-[#c18f58]/50'}`}
+                  >
+                    <Landmark className={paymentMethod === 'bank' ? 'text-[#c18f58]' : 'text-[#2a2825]'} size={24} />
+                    <span className={`font-bold mt-2 ${paymentMethod === 'bank' ? 'text-[#c18f58]' : 'text-[#2a2825]'}`}>Bank Trf</span>
+                  </button>
+                  <button 
+                    type="button"
                     onClick={() => setPaymentMethod('card')}
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${paymentMethod === 'card' ? 'border-[#c18f58] bg-[#c18f58]/5' : 'border-gray-100 bg-white hover:border-[#c18f58]/50'}`}
                   >
-                    <CreditCard className={paymentMethod === 'card' ? 'text-[#c18f58]' : 'text-gray-400'} size={24} />
-                    <span className="font-bold text-[#2a2825] mt-2">Card</span>
+                    <CreditCard className={paymentMethod === 'card' ? 'text-[#c18f58]' : 'text-[#2a2825]'} size={24} />
+                    <span className={`font-bold mt-2 ${paymentMethod === 'card' ? 'text-[#c18f58]' : 'text-[#2a2825]'}`}>Card</span>
                   </button>
                 </div>
 
-                {paymentMethod !== 'card' && (
-                  <motion.div initial={{ opacity: 0, h: 0 }} animate={{ opacity: 1, h: 'auto' }} className="space-y-4">
-                    <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Mobile Account Number</label>
-                    <input type="tel" placeholder={`Enter ${paymentMethod === 'jazzcash' ? 'JazzCash' : 'Easypaisa'} number`} className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
-                  </motion.div>
-                )}
-                
-                {paymentMethod === 'card' && (
-                  <motion.div initial={{ opacity: 0, h: 0 }} animate={{ opacity: 1, h: 'auto' }} className="space-y-4">
-                    <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Card Number</label>
-                    <input type="text" placeholder="0000 0000 0000 0000" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all mb-4" />
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Expiry Date</label>
-                        <input type="text" placeholder="MM/YY" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                <AnimatePresence mode="wait">
+                  {(paymentMethod === 'jazzcash' || paymentMethod === 'easypaisa') && (
+                    <motion.div key="mobile" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-4">
+                      <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Mobile Account Number</label>
+                      <input type="tel" required placeholder={`Enter ${paymentMethod === 'jazzcash' ? 'JazzCash' : 'Easypaisa'} number`} className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                    </motion.div>
+                  )}
+                  
+                  {paymentMethod === 'bank' && (
+                    <motion.div key="bank" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-4">
+                      <div className="bg-[#f9f7f2] p-5 rounded-2xl border border-[#4a5d23]/10">
+                        <p className="text-sm text-[#2a2825]/70 mb-4">Please transfer the total amount to the following bank account and enter your Transaction ID below:</p>
+                        <div className="space-y-2 mb-4 font-mono text-sm text-[#4a5d23]">
+                          <p><strong>Bank:</strong> Habib Bank Limited (HBL)</p>
+                          <p><strong>Account Title:</strong> Ajwa Bakers & Restaurant</p>
+                          <p><strong>Account Number:</strong> 0000 0000 0000 0000</p>
+                          <p><strong>IBAN:</strong> PK00 HABB 0000 0000 0000 0000</p>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">CVV</label>
-                        <input type="text" placeholder="123" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                      <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Transaction ID / Reference No.</label>
+                      <input type="text" required placeholder="Enter Transaction ID" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                    </motion.div>
+                  )}
+
+                  {paymentMethod === 'card' && (
+                    <motion.div key="card" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-4">
+                      <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Card Number</label>
+                      <input type="text" required placeholder="0000 0000 0000 0000" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all mb-4" />
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">Expiry Date</label>
+                          <input type="text" required placeholder="MM/YY" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-widest text-[#2a2825]/50 mb-2">CVV</label>
+                          <input type="text" required placeholder="123" className="w-full px-5 py-4 bg-[#f9f7f2] rounded-2xl outline-none focus:ring-2 focus:ring-[#c18f58]/50 border border-transparent transition-all" />
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 
@@ -120,12 +149,12 @@ export default function Checkout() {
                   <span className="text-lg font-serif text-[#4a5d23] font-bold">Total</span>
                   <span className="text-xl font-mono font-bold text-[#c18f58]">Rs. 3,650</span>
                 </div>
-                <button onClick={handleSubmit} className="w-full bg-[#4a5d23] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#c18f58] transition-all shadow-lg hover:-translate-y-1">
+                <button type="submit" form="checkout-form" className="w-full bg-[#4a5d23] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#c18f58] transition-all shadow-lg hover:-translate-y-1">
                   Pay Securely
                 </button>
               </div>
             </div>
-          </div>
+          </form>
         ) : (
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-[40px] shadow-2xl">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
